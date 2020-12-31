@@ -1,5 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+    <div class="row">
+        <div class="col-md">
+            <div class="container">
+                <div class="card card-body">
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {{ formset.management_form }}
+                        {% for form in formset %}
+                            {{ form.as_p }}
+                        {% endfor %}
+                        <input type="submit" value="Confirm" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

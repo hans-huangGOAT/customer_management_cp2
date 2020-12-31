@@ -8,7 +8,7 @@
                 <hr>
                 <div class="d-grid gap-2">
                     <button class="btn btn-outline-success btn-sm" type="button">Update Customer</button>
-                    <button class="btn btn-outline-info btn-sm" type="button">Place Orders</button>
+                    <a class="btn btn-outline-info btn-sm" href="{% url 'create_orders' customer.pk %}">Place Orders</a>
                 </div>
             </div>
         </div>
@@ -59,8 +59,8 @@
                             <td>{{ order.product.category }}</td>
                             <td>{{ order.date_created }}</td>
                             <td>{{ order.status }}</td>
-                            <td><a class="btn btn-info btn-sm" href="">Update</a></td>
-                            <td><a class="btn btn-danger btn-sm" href="">Remove</a></td>
+                            <td><a class="btn btn-info btn-sm" href="{% url 'update_order' order.pk %}">Update</a></td>
+                            <td><a class="btn btn-danger btn-sm" href="{% url 'delete_order' order.pk %}">Remove</a></td>
 
                         </tr>
                     {% endfor %}
