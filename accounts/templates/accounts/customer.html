@@ -16,8 +16,8 @@
             <div class="card card-body">
                 <h5>Contact Information:</h5>
                 <hr>
-                <h5>Email: </h5>
-                <h5>Phone: </h5>
+                <h5>Email: {{ customer.email }}</h5>
+                <h5>Phone: {{ customer.phone }}</h5>
             </div>
         </div>
         <div class="col-md">
@@ -26,7 +26,7 @@
                     <h5>Total Orders</h5>
                 </div>
                 <div class="card-body">
-                    <h3></h3>
+                    <h3>{{ total_orders }}</h3>
                 </div>
             </div>
         </div>
@@ -52,6 +52,18 @@
                         <th scope="col">Update</th>
                         <th scope="col">Remove</th>
                     </tr>
+
+                    {% for order in orders %}
+                        <tr>
+                            <td>{{ order.product }}</td>
+                            <td>{{ order.product.category }}</td>
+                            <td>{{ order.date_created }}</td>
+                            <td>{{ order.status }}</td>
+                            <td><a class="btn btn-info btn-sm" href="">Update</a></td>
+                            <td><a class="btn btn-danger btn-sm" href="">Remove</a></td>
+
+                        </tr>
+                    {% endfor %}
                 </table>
             </div>
         </div>

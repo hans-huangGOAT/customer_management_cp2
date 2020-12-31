@@ -15,8 +15,15 @@
                     <tr>
                         <th scope="col"></th>
                         <th scope="col">Name</th>
-                        <th scope="col">Phone</th>
+                        <th scope="col">E-mail</th>
                     </tr>
+                    {% for customer in customers %}
+                        <tr>
+                            <td><a class="btn btn-primary btn-sm" href="{% url 'customer' customer.pk %}">View</a> </td>
+                            <td>{{ customer.name }}</td>
+                            <td>{{ customer.email }}</td>
+                        </tr>
+                    {% endfor %}
                 </table>
             </div>
         </div>
@@ -26,11 +33,22 @@
                 <table class="table">
                     <tr>
                         <th scope="col">Product</th>
+                        <th scope="col">Customer</th>
                         <th scope="col">Date Ordered</th>
                         <th scope="col">Status</th>
                         <th scope="col">Update</th>
                         <th scope="col">Remove</th>
                     </tr>
+                    {% for order in orders %}
+                        <tr>
+                            <td>{{ order.product }}</td>
+                            <td>{{ order.customer }}</td>
+                            <td>{{ order.date_created }}</td>
+                            <td>{{ order.status }}</td>
+                            <td><a class="btn btn-info btn-sm" href="">Update</a> </td>
+                            <td><a class="btn btn-danger btn-sm" href="">Remove</a> </td>
+                        </tr>
+                    {% endfor %}
                 </table>
             </div>
         </div>
