@@ -59,12 +59,21 @@ def user_page(request):
     orders_delivered = orders.filter(status='Delivered').count()
 
     context = {
+        'orders': orders,
         'total_orders': total_orders,
         'orders_pending': orders_pending,
         'orders_delivered': orders_delivered,
     }
     return render(request, 'accounts/user_page.html', context)
 
+def account_settings(request):
+    customer = request.user.customer
+    form = CustomerForm(instance=customer)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'accounts/account_settings.html', context)
 
 @admin_only
 @login_required(login_url='login')
