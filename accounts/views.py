@@ -66,14 +66,23 @@ def user_page(request):
     }
     return render(request, 'accounts/user_page.html', context)
 
+
+@allowed_users(allowed_roles=['customer'])
+@login_required(login_url='login')
 def account_settings(request):
     customer = request.user.customer
     form = CustomerForm(instance=customer)
 
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, request.FILES, instance=customer)
+        if form.is_valid():
+            form.save()
+            return redirect('account_settings')
     context = {
         'form': form,
     }
     return render(request, 'accounts/account_settings.html', context)
+
 
 @admin_only
 @login_required(login_url='login')

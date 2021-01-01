@@ -8,8 +8,8 @@ class Customer(models.Model):
     user = models.OneToOneField(User, blank=True, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True)
     email = models.CharField(max_length=200, null=True)
-    profile_pic = models.ImageField(blank=True, null=True)
     phone = models.CharField(max_length=200, blank=True, null=True)
+    profile_pic = models.ImageField(default="default_profile_pic.jpg", blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
