@@ -123,3 +123,11 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_HOST_USER = '18669862035@163.com'
+EMAIL_HOST_PASSWORD = 'UMEJQLHEVKQWDVPE'
+DEFAULT_FROM_EMAIL = '18669862035@163.com'
+EMAIL_PORT = 25
