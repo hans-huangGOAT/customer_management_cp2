@@ -6,9 +6,11 @@ from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .decorators import *
 
 
 # Create your views here.
+@logout_required
 def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -27,6 +29,7 @@ def login_page(request):
     return render(request, 'accounts/login.html', context)
 
 
+@logout_required
 def register_page(request):
     form = CreateUserForm()
 
@@ -47,13 +50,23 @@ def logout_page(request):
     return redirect('login')
 
 
+@allowed_users(allowed_roles=['customer'])
+@login_required(login_url='login')
 def user_page(request):
-    context = {
+    orders = request.user.customer.order_set.all()
+    total_orders = orders.count()
+    orders_pending = orders.filter(status='Pending').count()
+    orders_delivered = orders.filter(status='Delivered').count()
 
+    context = {
+        'total_orders': total_orders,
+        'orders_pending': orders_pending,
+        'orders_delivered': orders_delivered,
     }
     return render(request, 'accounts/user_page.html', context)
 
 
+@admin_only
 @login_required(login_url='login')
 def dashboard(request):
     customers = Customer.objects.all()
@@ -73,6 +86,7 @@ def dashboard(request):
     return render(request, 'accounts/dashboard.html', context)
 
 
+@allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login')
 def customer(request, pk):
     customer = Customer.objects.get(pk=pk)
@@ -87,6 +101,7 @@ def customer(request, pk):
     return render(request, 'accounts/customer.html', context)
 
 
+@allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login')
 def products(request):
     products = Product.objects.all()
@@ -96,6 +111,7 @@ def products(request):
     return render(request, 'accounts/products.html', context)
 
 
+@allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login')
 def create_orders(request, pk):
     customer = Customer.objects.get(pk=pk)
@@ -114,6 +130,7 @@ def create_orders(request, pk):
     return render(request, 'accounts/create_orders.html', context)
 
 
+@allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login')
 def update_order(request, pk):
     order = Order.objects.get(pk=pk
@@ -131,6 +148,7 @@ def update_order(request, pk):
     return render(request, 'accounts/update_order.html', context)
 
 
+@allowed_users(allowed_roles=['admin'])
 @login_required(login_url='login')
 def delete_order(request, pk):
     order = Order.objects.get(pk=pk)

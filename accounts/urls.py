@@ -15,5 +15,4 @@ urlpatterns = [
     path('logout/', logout_page, name='logout'),
 
     path('user/', user_page, name='user_page'),
-
 ]
